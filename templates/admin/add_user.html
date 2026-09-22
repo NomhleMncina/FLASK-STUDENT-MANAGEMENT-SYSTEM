@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Add User - SMS{% endblock %}
+
+{% block content %}
+<div class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">Create User Account</h1>
+
+    <form method="POST" action="{{ url_for('admin.add_user') }}" class="space-y-4">
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Email Address</label>
+            <input type="email" name="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border focus:ring-indigo-500 focus:border-indigo-500">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Password</label>
+            <input type="password" name="password" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border focus:ring-indigo-500 focus:border-indigo-500">
+            <p class="text-xs text-gray-500 mt-1">At least 8 chars, 1 uppercase, 1 number & 1 special character.</p>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700">User Role</label>
+            <select name="role" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border focus:ring-indigo-500 focus:border-indigo-500">
+                <option value="Student">Student</option>
+                <option value="Lecturer">Lecturer</option>
+                <option value="Admin">Admin</option>
+            </select>
+        </div>
+
+        <div class="flex items-center justify-between pt-4">
+            <a href="{{ url_for('admin.manage_users') }}" class="text-sm text-gray-600 hover:text-gray-900">Cancel</a>
+            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-md text-sm">Save User</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

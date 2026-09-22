@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <div class="bg-white p-6 rounded-lg shadow border border-gray-200">
+        <h2 class="text-2xl font-bold text-gray-800">Welcome, {{ student.FirstName }} {{ student.LastName }}</h2>
+        <p class="text-gray-600 text-sm font-mono mt-1">Student Number: {{ student.StudentNumber }}</p>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow border border-gray-200">
+        <h3 class="text-lg font-bold text-gray-800 mb-4">My Allocated Marks</h3>
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Course Code</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Course Name</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Lecturer</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Allocated Mark</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 text-sm">
+                    {% for alloc in allocations %}
+                        <tr>
+                            <td class="px-6 py-4 font-semibold text-gray-900">{{ alloc.course.CourseCode }}</td>
+                            <td class="px-6 py-4 text-gray-600">{{ alloc.course.CourseName }}</td>
+                            <td class="px-6 py-4 text-gray-600">{{ alloc.lecturer.FirstName }} {{ alloc.lecturer.LastName }}</td>
+                            <td class="px-6 py-4 text-gray-900 font-bold text-base">
+                                {% if alloc.Mark is not none %}
+                                    <span class="text-green-600">{{ alloc.Mark }}%</span>
+                                {% else %}
+                                    <span class="text-gray-400 font-normal italic text-xs">Not Released Yet</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

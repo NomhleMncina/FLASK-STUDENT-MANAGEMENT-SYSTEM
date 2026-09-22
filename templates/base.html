@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Student Management System{% endblock %}</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col font-sans">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-indigo-600 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
+            <div class="flex items-center space-x-3">
+                <span class="font-bold text-xl tracking-wide">SMS Portal</span>
+                {% if current_user.is_authenticated %}
+                    <span class="bg-indigo-800 text-xs px-2.5 py-1 rounded-full font-semibold uppercase tracking-wider">
+                        {{ current_user.Role }}
+                    </span>
+                {% endif %}
+            </div>
+
+            <div class="flex items-center space-x-4">
+                {% if current_user.is_authenticated %}
+                    {% if current_user.Role == 'Admin' %}
+                        <a href="{{ url_for('admin.dashboard') }}" class="hover:text-indigo-200 text-sm font-medium">Dashboard</a>
+                        <a href="{{ url_for('admin.manage_courses') }}" class="hover:text-indigo-200 text-sm font-medium">Courses</a>
+                        <a href="{{ url_for('admin.manage_lecturers') }}" class="hover:text-indigo-200 text-sm font-medium">Lecturers</a>
+                        <a href="{{ url_for('admin.manage_students') }}" class="hover:text-indigo-200 text-sm font-medium">Students</a>
+                        <a href="{{ url_for('admin.manage_allocations') }}" class="hover:text-indigo-200 text-sm font-medium">Allocations</a>
+                    {% elif current_user.Role == 'Lecturer' %}
+                        <a href="{{ url_for('lecturer.dashboard') }}" class="hover:text-indigo-200 text-sm font-medium">Dashboard</a>
+                        <a href="{{ url_for('lecturer.profile') }}" class="hover:text-indigo-200 text-sm font-medium">Edit Profile</a>
+                    {% elif current_user.Role == 'Student' %}
+                        <a href="{{ url_for('student.dashboard') }}" class="hover:text-indigo-200 text-sm font-medium">My Marks</a>
+                        <a href="{{ url_for('student.profile') }}" class="hover:text-indigo-200 text-sm font-medium">Edit Profile</a>
+                    {% endif %}
+
+                    <a href="{{ url_for('auth.profile') }}" class="hover:text-indigo-200 text-sm font-medium">Account Settings</a>
+                    <a href="{{ url_for('auth.logout') }}" class="bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1.5 rounded transition">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}" class="hover:text-indigo-200 text-sm font-medium">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Alerts Container -->
+    <div class="max-w-7xl mx-auto px-4 mt-4 w-full">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    {% set alert_color = 'bg-blue-100 text-blue-800 border-blue-400' %}
+                    {% if category == 'success' %}
+                        {% set alert_color = 'bg-green-100 text-green-800 border-green-400' %}
+                    {% elif category == 'danger' %}
+                        {% set alert_color = 'bg-red-100 text-red-800 border-red-400' %}
+                    {% elif category == 'warning' %}
+                        {% set alert_color = 'bg-yellow-100 text-yellow-800 border-yellow-400' %}
+                    {% endif %}
+                    <div class="{{ alert_color }} border-l-4 p-4 rounded mb-3 shadow-sm flex justify-between items-center" role="alert">
+                        <p class="text-sm font-medium">{{ message }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-400 py-4 text-center text-xs">
+        &copy; Student Management System. Built with Flask & Tailwind CSS.
+    </footer>
+
+    <!-- Custom JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

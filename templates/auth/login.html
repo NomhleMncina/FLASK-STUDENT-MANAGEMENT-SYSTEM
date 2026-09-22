@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Login - Student Management System{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-8 border border-gray-200 mt-10">
+    <h2 class="text-2xl font-bold text-gray-800 text-center mb-6">Account Login</h2>
+
+    <form method="POST" action="{{ url_for('auth.login') }}" class="space-y-4">
+        <div>
+            <label class="block text-gray-700 text-sm font-medium mb-1">Email Address (Username)</label>
+            <input type="email" name="email" required
+                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                   placeholder="user@domain.com">
+        </div>
+
+        <div>
+            <label class="block text-gray-700 text-sm font-medium mb-1">Password</label>
+            <div class="relative">
+                <input type="password" id="loginPassword" name="password" required
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 pr-10"
+                       placeholder="••••••••">
+                <button type="button" id="toggleBtn" onclick="togglePasswordVisibility('loginPassword', 'toggleBtn')"
+                        class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between text-sm mt-2">
+            <a href="{{ url_for('auth.reset_password_request') }}" class="text-indigo-600 hover:underline">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-md transition duration-200">
+            Sign In
+        </button>
+    </form>
+</div>
+{% endblock %}

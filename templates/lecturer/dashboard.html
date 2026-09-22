@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Lecturer Dashboard{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <div class="bg-white p-6 rounded-lg shadow border border-gray-200">
+        <h2 class="text-2xl font-bold text-gray-800">Welcome, Prof. {{ lecturer.FirstName }} {{ lecturer.LastName }}</h2>
+        <p class="text-gray-600 text-sm">Department: {{ lecturer.Department or 'N/A' }}</p>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow border border-gray-200">
+        <h3 class="text-lg font-bold text-gray-800 mb-4">Allocated Students & Marks</h3>
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Student No.</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Student Name</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Course</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Current Mark</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 text-sm">
+                    {% for alloc in allocations %}
+                        <tr>
+                            <td class="px-6 py-4 font-mono text-gray-900">{{ alloc.student.StudentNumber }}</td>
+                            <td class="px-6 py-4 text-gray-900">{{ alloc.student.FirstName }} {{ alloc.student.LastName }}</td>
+                            <td class="px-6 py-4 text-gray-600">{{ alloc.course.CourseCode }}</td>
+                            <td class="px-6 py-4 font-semibold text-gray-800">
+                                {% if alloc.Mark is not none %}
+                                    {{ alloc.Mark }}%
+                                {% else %}
+                                    <span class="text-yellow-600 bg-yellow-100 px-2 py-0.5 rounded text-xs">Pending</span>
+                                {% endif %}
+                            </td>
+                            <td class="px-6 py-4">
+                                <a href="{{ url_for('lecturer.assign_mark', allocation_id=alloc.AllocationID) }}"
+                                   class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-3 py-1.5 rounded font-medium">
+                                    Assign / Edit Mark
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

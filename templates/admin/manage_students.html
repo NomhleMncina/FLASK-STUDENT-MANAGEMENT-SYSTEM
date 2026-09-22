@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Students - SMS{% endblock %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Student Directory</h1>
+</div>
+
+<div class="bg-white shadow rounded-lg overflow-hidden">
+    <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+            <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student ID</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student Number</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">First Name</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Name</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            {% for student in students %}
+            <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ student.StudentID }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-mono">{{ student.StudentNumber }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ student.FirstName }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ student.LastName }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-500">No students registered yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
