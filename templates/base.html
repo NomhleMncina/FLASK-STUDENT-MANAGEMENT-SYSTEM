@@ -13,7 +13,7 @@
     <nav class="bg-indigo-600 text-white shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
             <div class="flex items-center space-x-3">
-                <span class="font-bold text-xl tracking-wide">SMS Portal</span>
+              
                 {% if current_user.is_authenticated %}
                     <span class="bg-indigo-800 text-xs px-2.5 py-1 rounded-full font-semibold uppercase tracking-wider">
                         {{ current_user.Role }}

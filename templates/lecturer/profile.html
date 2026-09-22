@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Lecturer Profile - SMS{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+    <!-- Header -->
+    <div class="bg-indigo-600 px-6 py-5 text-white flex justify-between items-center">
+        <div>
+            <h1 class="text-xl font-bold tracking-tight">Lecturer Profile</h1>
+            <p class="text-indigo-200 text-sm mt-0.5">Manage your account information and preferences</p>
+        </div>
+        <span class="bg-indigo-700 text-indigo-100 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
+            Lecturer
+        </span>
+    </div>
+
+    <!-- Form Content -->
+    <div class="p-6">
+        <form method="POST" action="{{ url_for('lecturer.profile') }}" class="space-y-5">
+            
+            <!-- Lecturer ID (Read Only) -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Lecturer ID</label>
+                <input type="text" 
+                       value="LEC-00{{ lecturer.LecturerID if lecturer else current_user.UserID }}" 
+                       disabled 
+                       class="w-full bg-gray-100 border border-gray-300 rounded-md py-2 px-3 text-gray-500 font-mono text-sm cursor-not-allowed">
+            </div>
+
+            <!-- First Name -->
+            <div>
+                <label for="first_name" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                <input type="text" 
+                       id="first_name" 
+                       name="first_name" 
+                       value="{{ lecturer.FirstName if lecturer else '' }}" 
+                       required 
+                       class="w-full border border-gray-300 rounded-md py-2 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+            </div>
+
+            <!-- Last Name -->
+            <div>
+                <label for="last_name" class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                <input type="text" 
+                       id="last_name" 
+                       name="last_name" 
+                       value="{{ lecturer.LastName if lecturer else '' }}" 
+                       required 
+                       class="w-full border border-gray-300 rounded-md py-2 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+            </div>
+
+            <!-- Email Address -->
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                <input type="email" 
+                       id="email" 
+                       name="email" 
+                       value="{{ current_user.Email if current_user else '' }}" 
+                       required 
+                       class="w-full border border-gray-300 rounded-md py-2 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+            </div>
+
+            <!-- New Password -->
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">New Password</label>
+                <input type="password" 
+                       id="password" 
+                       name="password" 
+                       placeholder="••••••••" 
+                       class="w-full border border-gray-300 rounded-md py-2 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                <p class="text-xs text-gray-500 mt-1">Leave blank to keep your current password.</p>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                <a href="{{ url_for('lecturer.dashboard') }}" 
+                   class="inline-flex items-center text-sm font-medium text-gray-600 hover:text-indigo-600 transition">
+                    ← Back to Dashboard
+                </a>
+                <button type="submit" 
+                        class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-5 py-2 rounded-md text-sm shadow-sm transition">
+                    Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

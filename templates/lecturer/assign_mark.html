@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Assign Mark - SMS{% endblock %}
+
+{% block content %}
+<div class="max-w-lg mx-auto bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 p-8">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">Assign Student Mark</h1>
+
+    <!-- Course & Student Info -->
+    <div class="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200 text-sm text-gray-700 space-y-1">
+        <p><strong>Course:</strong> {{ allocation.course.CourseName if allocation.course else allocation.CourseID }} ({{ allocation.course.CourseCode if allocation.course else '' }})</p>
+        <p><strong>Student:</strong> {{ allocation.student.FirstName if allocation.student else '' }} {{ allocation.student.LastName if allocation.student else '' }} ({{ allocation.student.StudentNumber if allocation.student else allocation.StudentID }})</p>
+    </div>
+
+    <form method="POST" action="" class="space-y-4">
+        <div>
+            <label for="mark" class="block text-sm font-medium text-gray-700 mb-1">Mark / Grade</label>
+            <input type="text" 
+                   id="mark" 
+                   name="mark" 
+                   placeholder="e.g. 85 or A" 
+                   value="{{ allocation.Mark if allocation.Mark else '' }}" 
+                   required 
+                   class="w-full border border-gray-300 rounded-md py-2 px-3 text-gray-800 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+        </div>
+
+        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+            <a href="{{ url_for('lecturer.dashboard') }}" class="text-sm font-medium text-gray-600 hover:text-indigo-600">
+                ← Back to Dashboard
+            </a>
+            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-md text-sm transition">
+                Save Mark
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

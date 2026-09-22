@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Nomhle Model School - Student Management System{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto py-12 px-4 space-y-10">
+
+    <!-- Header & Welcome Banner -->
+    <div class="bg-indigo-600 text-white rounded-2xl p-8 shadow-md text-center space-y-4">
+        <h1 class="text-3xl md:text-4xl font-bold tracking-tight">
+            Nomhle Model School
+        </h1>
+        <p class="text-indigo-100 text-base md:text-lg max-w-xl mx-auto font-light">
+            Student Management System for tracking courses, managing class allocations, and recording academic results.
+        </p>
+
+        <div class="pt-2">
+            {% if current_user.is_authenticated %}
+                {% if current_user.Role == 'Admin' %}
+                    <a href="{{ url_for('admin.dashboard') }}" class="inline-block bg-white text-indigo-600 hover:bg-gray-100 font-semibold px-6 py-2.5 rounded-lg transition text-sm">
+                        Go to Admin Dashboard →
+                    </a>
+                {% elif current_user.Role == 'Lecturer' %}
+                    <a href="{{ url_for('lecturer.dashboard') }}" class="inline-block bg-white text-indigo-600 hover:bg-gray-100 font-semibold px-6 py-2.5 rounded-lg transition text-sm">
+                        Go to Lecturer Dashboard →
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('student.dashboard') }}" class="inline-block bg-white text-indigo-600 hover:bg-gray-100 font-semibold px-6 py-2.5 rounded-lg transition text-sm">
+                        Go to Student Portal →
+                    </a>
+                {% endif %}
+            {% else %}
+                <a href="{{ url_for('auth.login') }}" class="inline-block bg-white text-indigo-600 hover:bg-gray-100 font-semibold px-6 py-2.5 rounded-lg transition text-sm">
+                    Login to Portal
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Role Information Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+            <h3 class="font-bold text-gray-800 text-lg mb-2">Administrator</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">
+                Register new users, create modules and courses, and assign lecturers to classes.
+            </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+            <h3 class="font-bold text-gray-800 text-lg mb-2">Lecturer</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">
+                Access assigned course rosters, enter student marks, and manage module feedback.
+            </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+            <h3 class="font-bold text-gray-800 text-lg mb-2">Student</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">
+                View registered courses, check official marks, and update personal account details.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

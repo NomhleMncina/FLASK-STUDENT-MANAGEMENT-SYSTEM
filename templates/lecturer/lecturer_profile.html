@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Lecturer Profile{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-3">
+                    <h4 class="mb-0">Lecturer Profile</h4>
+                    <span class="badge bg-primary">Lecturer</span>
+                </div>
+                <div class="card-body p-4">
+                    <!-- Flash Messages -->
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+                    <form method="POST" action="">
+                        <div class="mb-3">
+                            <label for="name" class="form-label font-weight-bold">Full Name</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ current_user.name }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label font-weight-bold">Email Address</label>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ current_user.email }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="department" class="form-label font-weight-bold">Department</label>
+                            <input type="text" class="form-control" id="department" name="department" value="{{ current_user.department or '' }}" placeholder="e.g., Computer Science">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="password" class="form-label font-weight-bold">New Password <small class="text-muted">(leave blank to keep current password)</small></label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="••••••••">
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url_for('lecturer_dashboard') }}" class="btn btn-outline-secondary">Back to Dashboard</a>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

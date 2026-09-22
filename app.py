@@ -37,7 +37,8 @@ def create_app(config_class=Config):
     # Root route redirect
     @app.route('/')
     def index():
-        return redirect(url_for('auth.login'))
+
+        return render_template('index.html')
 
     return app
 
