@@ -6,9 +6,7 @@ from utils.decorators import role_required
 
 student_bp = Blueprint('student', __name__, url_prefix='/student')
 
-# ----------------------------------------------------
-# 1. STUDENT DASHBOARD (View Assigned Marks)
-# ----------------------------------------------------
+
 @student_bp.route('/dashboard')
 @login_required
 @role_required('Student')
@@ -20,9 +18,7 @@ def dashboard():
     
     return render_template('student/dashboard.html', student=student, allocations=allocations)
 
-# ----------------------------------------------------
-# 2. VIEW & EDIT PROFILE
-# ----------------------------------------------------
+
 @student_bp.route('/profile', methods=['GET', 'POST'])
 @login_required
 @role_required('Student')

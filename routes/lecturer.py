@@ -6,9 +6,7 @@ from utils.decorators import role_required
 
 lecturer_bp = Blueprint('lecturer', __name__, url_prefix='/lecturer')
 
-# ----------------------------------------------------
-# 1. LECTURER DASHBOARD
-# ----------------------------------------------------
+
 @lecturer_bp.route('/dashboard')
 @login_required
 @role_required('Lecturer')
@@ -17,9 +15,7 @@ def dashboard():
     allocations = LecturerAllocation.query.filter_by(LecturerID=lecturer.LecturerID).all()
     return render_template('lecturer/dashboard.html', lecturer=lecturer, allocations=allocations)
 
-# ----------------------------------------------------
-# 2. VIEW & EDIT PROFILE
-# ----------------------------------------------------
+
 @lecturer_bp.route('/profile', methods=['GET', 'POST'])
 @login_required
 @role_required('Lecturer')
@@ -36,9 +32,7 @@ def profile():
 
     return render_template('lecturer/profile.html', lecturer=lecturer)
 
-# ----------------------------------------------------
-# 3. ASSIGN / EDIT MARKS FOR ALLOCATED STUDENTS ONLY
-# ----------------------------------------------------
+
 @lecturer_bp.route('/assign-mark/<int:allocation_id>', methods=['GET', 'POST'])
 @login_required
 @role_required('Lecturer')
